@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <h2 class="h3">Mes Pokemons</h2>
+
+    {% for pokemon in pokemons %}
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><a href="/{{ pokemon._id }}">{{ pokemon.name }}</a></h5>
+            <p class="card-text">{{ pokemon.description }}</p>
+        </div>
+    </div>
+
+    {% endfor %}
+
+{% endblock %}

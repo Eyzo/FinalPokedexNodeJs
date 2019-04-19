@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    {% for type in types%}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ type.name }}</h5>
+            <p class="card-text">{{ type.color }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

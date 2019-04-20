@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-sm-4 offset-2">
-        <img width="100%" src="{{ pokemon.picture }}" alt="pokemon-img">
+        <img width="100%" src="/uploads/{{ pokemon.picture }}" alt="pokemon-img">
     </div>
     <div class="col-sm-6">
 
@@ -12,8 +12,12 @@
         <p class="text-center">{{ pokemon.description }}</p>
 
         {% for type in pokemon.types %}
-        <span class="badge" style="background-color: {{ type.color }};color: #FFF;">{{ type.name }}</span>
+        <a href="/types/{{ type.name }}" class="badge" style="background-color: {{ type.color }};color: #FFF;">{{ type.name }}</a>
         {% endfor %}
+
+        <hr>
+        <a class="btn btn-primary" href="/edit/{{ pokemon.id }}">Editer</a>
+        <a class="btn btn-danger" href="/delete/{{ pokemon.id }}" onclick="return window.confirm()">Supprimer</a>
 
     </div>
 </div>

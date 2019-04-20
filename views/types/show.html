@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h2>Pokémons de type <span style="color: {{ type.color }}">{{ type.name }}</span></h2>
+
+<a class="btn btn-primary" href="/new">Ajouter un Pokemon</a>
+<hr>
+{% for pokemon in pokemons %}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"><a href="/{{ pokemon._id }}">{{ pokemon.name }}</a></h5>
+        <p class="card-text">{{ pokemon.description }}</p>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

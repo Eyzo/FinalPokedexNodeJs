@@ -11,7 +11,7 @@ router.get('/',(req,res) => {
             pokemons: pokemons
         })
 
-    })
+    }).catch()
 });
 
 router.get('/new',(req,res) => {
@@ -22,10 +22,11 @@ router.get('/new',(req,res) => {
 
         res.render('pokemons/edit.html',{
             pokemon: pokemon,
-            types: types
+            types: types,
+            endpoint: '/'
         });
 
-    });
+    }).catch();
 });
 
 router.get('/edit/:id',(req,res) => {
@@ -34,10 +35,21 @@ router.get('/edit/:id',(req,res) => {
         PokemonModel.findById(req.params.id).then((pokemon) => {
             res.render('pokemons/edit.html',{
                 pokemon:pokemon,
-                types:types
+                types:types,
+                endpoint: '/' + pokemon._id.toString()
             });
         });
-    });
+    }).catch();
+});
+
+router.get('/delete/:id',(req,res) => {
+
+    PokemonModel.findOneAndRemove({ _id: req.params.id}).then(() => {
+
+        res.redirect('/');
+
+    })
+
 });
 
 router.get('/:id',(req,res) => {
@@ -48,7 +60,33 @@ router.get('/:id',(req,res) => {
             pokemon:pokemon
         })
 
-    })
+    }).catch();
 });
+
+router.post('/:id?',(req,res) => {
+
+    new Promise((resolve,reject) => {
+        if (req.params.id) {
+            PokemonModel.findById(req.params.id).then(resolve,reject)
+        } else {
+            resolve(new PokemonModel());
+        }
+    }).then((pokemon) => {
+        pokemon.name = req.body.name;
+        pokemon.description = req.body.description;
+        pokemon.number = req.body.number;
+        pokemon.types = req.body.types;
+
+        if (req.file) pokemon.picture = req.file.filename;
+
+        return pokemon.save();
+    }).then(() => {
+        res.redirect('/');
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
 
 module.exports = router;

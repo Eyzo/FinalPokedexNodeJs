@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <form method="post">
+    <form method="post" action="{{ endpoint }}" enctype="multipart/form-data">
 
         <div class="form-group">
             <label for="name">Nom du Pokemon</label>
@@ -27,7 +27,7 @@
         {% for type in types %}
         <div class="form-group">
             <label>
-                <input type="checkbox" name="types[]" value="{{ type.name }}"
+                <input type="checkbox" name="types[]" value="{{ type._id }}"
                        {% if pokemon.types.indexOf(type._id) != -1 %} checked {% endif %}>
                 {{ type.name }}
             </label>
